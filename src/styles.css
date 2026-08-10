@@ -1020,13 +1020,13 @@ button { font: inherit; }
 
 @media (max-width: 720px) {
   .hero { display: block; min-height: 100svh; padding: 1rem 1.1rem 2rem; overflow: visible; }
-  .header { align-items: flex-start; gap: 1rem; }
+  .header { align-items: flex-start; gap: .75rem; }
   .header__market { display: none; }
   .brand { gap: .3rem; }
   .brand__logo { width: 36px; height: 36px; }
   .brand__name { font-size: .72rem; letter-spacing: .08em; }
-  .nav { max-width: 62%; flex-wrap: wrap; gap: 0 .9rem; }
-  .nav__link { min-height: 34px; font-size: 15px; }
+  .nav { max-width: 65%; flex-wrap: wrap; gap: 0 .75rem; }
+  .nav__link { min-height: 32px; font-size: 13px; }
   .nav__link::after { bottom: 3px; }
   .hero__artwork { grid-template-rows: 1fr auto; width: 100%; min-height: 700px; margin-top: 1rem; aspect-ratio: auto; border-radius: 28px; }
   .hero__artwork-image { object-position: center; }
@@ -1039,15 +1039,68 @@ button { font: inherit; }
   .cta { width: 100%; min-width: 0; min-height: 48px; padding: .65rem .8rem; font-size: 16px; }
   .scroll-cue { gap: .45rem; font-size: 13px; letter-spacing: .1em; }
   .scroll-cue__line { height: 12px; }
-  .chapter-review { padding: 4rem 1rem; overflow-x: auto; }
+  .chapter-review { min-height: 0; padding: 4rem 1rem 5rem; overflow: hidden; }
   .lore-heading-block { margin-bottom: 32px; }
   .lore-heading-block h2 { font-size: 35px; line-height: 1.05; }
   .lore-heading-block p { margin-top: 16px; font-size: 18px; line-height: 1.55; }
+  .chapter-stage { width: 100%; }
+  .chapter-card {
+    grid-template-rows: 24px 280px minmax(0, 1fr) 36px;
+    width: min(100%, 440px);
+    min-height: 0;
+    padding: 20px;
+  }
+  .chapter-card__image-wrap { height: 264px; }
+  .chapter-card__story { padding-top: 18px; }
+  .chapter-card__title { font-size: 30px; }
+  .chapter-card__copy { max-height: none; font-size: 13px; line-height: 1.5; }
+  .chapter-card__navigation { margin-top: 18px; }
   .ecosystem-band { padding: 1.5rem 1rem; }
   .ecosystem-strip { flex-direction: column; align-items: flex-start; gap: 1.75rem; padding: 24px 1.25rem; background: #070d1c; }
   .ecosystem-strip__logos { width: 100%; gap: 1rem; }
   .ecosystem-strip__logos img { width: 60px; height: 60px; flex-basis: 60px; }
   .ecosystem-strip__logos figcaption { font-size: 10px; }
+  .destination-section {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+    width: calc(100% - 2rem);
+    min-height: 0;
+    padding: 4rem 0 5rem;
+  }
+  .destination-section__right-column {
+    grid-template-rows: auto auto;
+    gap: 1.25rem;
+  }
+  .destination-panel { padding: 1.5rem; border-radius: 1.5rem; }
+  .destination-panel--about { padding: 1.5rem; }
+  .destination-panel--about h2,
+  .destination-panel--vault h2,
+  .destination-panel--community h2 { font-size: 28px; white-space: normal; }
+  .about-panel__content { margin-top: 1.25rem; gap: 1rem; }
+  .about-panel__intro,
+  .about-panel__market-note,
+  .about-panel__disclaimer { font-size: 13px; }
+  .about-panel__facts dd { font-size: 12px; }
+  .about-panel__contract code { font-size: 11px; }
+  .vault-panel__content { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; margin-top: 1.25rem; }
+  .vault-panel__details { gap: 1rem; }
+  .vault-panel__details p { font-size: 13px; line-height: 1.55; }
+  .vault-panel__details ul { font-size: 12px; line-height: 1.45; }
+  .vault-calculator { width: 100%; }
+  .vault-calculator__tabs { gap: .35rem; }
+  .vault-calculator__tabs button { font-size: 9px; }
+  .destination-panel--community { min-height: 0; }
+  .community-panel__content { margin-top: 1rem; }
+  .community-panel__content p { font-size: 13px; }
+  .community-panel__links a { min-height: 38px; font-size: 11px; }
+  .site-footer { padding: 3rem 1rem 1.5rem; }
+  .site-footer__main { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 1.25rem; padding-bottom: 2rem; }
+  .site-footer__brand { grid-column: 1 / -1; max-width: none; }
+  .site-footer__brand p { max-width: 250px; }
+  .site-footer__bottom { display: grid; justify-content: stretch; gap: 1.25rem; }
+  .site-footer__contract { display: grid; grid-template-columns: auto auto 1fr; align-items: center; gap: .55rem; }
+  .site-footer__contract code { grid-column: 1 / -1; width: 100%; font-size: 10px; overflow-wrap: anywhere; }
+  .site-footer__bottom > p { font-size: 9px; line-height: 1.5; }
 }
 
 @media (max-height: 620px) and (min-width: 721px) {

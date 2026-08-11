@@ -24,6 +24,8 @@ function App() {
   const [chapterTransition, setChapterTransition] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mobilePage, setMobilePage] = useState('home');
+  const [isStickyNavVisible, setIsStickyNavVisible] = useState(false);
+  const headerRef = useRef(null);
   const transitionTimer = useRef(null);
   const copyStatusTimer = useRef(null);
   const [ecosystemRef, ecosystemVisible] = useRevealOnView(.22);
@@ -121,6 +123,16 @@ function App() {
   }, []);
 
   useEffect(() => {
+    const headerEl = headerRef.current;
+    if (!headerEl || typeof IntersectionObserver === 'undefined') return undefined;
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsStickyNavVisible(!entry.isIntersecting);
+    }, { threshold: 0 });
+    observer.observe(headerEl);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     const lore = document.getElementById('lore');
     if (!lore || typeof IntersectionObserver === 'undefined') {
       setLoreVisible(true);
@@ -144,7 +156,7 @@ function App() {
   return (
     <main data-mobile-page={mobilePage}>
       <section className="hero">
-        <header className="header reveal reveal--header">
+        <header ref={headerRef} className="header reveal reveal--header">
           <a className="brand" href="#top" aria-label="EPIK-DUCK home" onClick={() => setMobilePage('home')}>
             <img className="brand__logo" src={logo} alt="EPIK-DUCK logo" />
             <span className="brand__name">EPIK-DUCK</span>
@@ -395,6 +407,33 @@ function App() {
           <p>&copy; 2024&ndash;2026 EPIK-DUCK. $EPIK is a meme coin, not financial advice.</p>
         </div>
       </footer>
+      <header
+        className={`sticky-nav${isStickyNavVisible ? ' is-visible' : ''}`}
+        aria-hidden={!isStickyNavVisible}
+      >
+        <a className="brand" href="#top" aria-label="EPIK-DUCK home" onClick={() => setMobilePage('home')}>
+          <img className="brand__logo" src={logo} alt="EPIK-DUCK logo" />
+          <span className="brand__name">EPIK-DUCK</span>
+        </a>
+        <nav className="nav nav--desktop nav--sticky" aria-label="Sticky navigation">
+          {navigation.map((item, index) => {
+            const sectionId = item.toLowerCase();
+            return (
+              <a
+                key={item}
+                className={`nav__link${activeSection === sectionId ? ' is-active' : ''}`}
+                href={`#${sectionId}`}
+                aria-current={activeSection === sectionId ? 'location' : undefined}
+                tabIndex={isStickyNavVisible ? undefined : -1}
+                style={{ '--nav-index': index }}
+              >
+                {item}
+              </a>
+            );
+          })}
+        </nav>
+      </header>
+
       <SpeedInsights />
     </main>
   );

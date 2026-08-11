@@ -1025,8 +1025,8 @@ button { font: inherit; }
   .brand { gap: .3rem; }
   .brand__logo { width: 36px; height: 36px; }
   .brand__name { font-size: .72rem; letter-spacing: .08em; }
-  .nav { max-width: 65%; flex-wrap: wrap; gap: 0 .75rem; }
-  .nav__link { min-height: 32px; font-size: 13px; }
+  .nav { max-width: none; flex-wrap: nowrap; gap: 0 .5rem; }
+  .nav__link { min-height: 32px; font-size: 12px; }
   .nav__link::after { bottom: 3px; }
   .hero__artwork { grid-template-rows: 1fr auto; width: 100%; min-height: 700px; margin-top: 1rem; aspect-ratio: auto; border-radius: 28px; }
   .hero__artwork-image { object-position: center; }
@@ -1086,9 +1086,18 @@ button { font: inherit; }
   .vault-panel__details { gap: 1rem; }
   .vault-panel__details p { font-size: 13px; line-height: 1.55; }
   .vault-panel__details ul { font-size: 12px; line-height: 1.45; }
-  .vault-calculator { width: 100%; }
-  .vault-calculator__tabs { gap: .35rem; }
-  .vault-calculator__tabs button { font-size: 9px; }
+  .vault-calculator { width: 100%; padding-left: 0; }
+  .vault-calculator__tabs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5px;
+  }
+  .vault-calculator__tabs button {
+    min-height: 32px;
+    padding: 6px 4px;
+    font-size: 10px;
+    line-height: 1.2;
+    white-space: normal;
+  }
   .destination-panel--community { min-height: 0; }
   .community-panel__content { margin-top: 1rem; }
   .community-panel__content p { font-size: 13px; }
@@ -1101,6 +1110,12 @@ button { font: inherit; }
   .site-footer__contract { display: grid; grid-template-columns: auto auto 1fr; align-items: center; gap: .55rem; }
   .site-footer__contract code { grid-column: 1 / -1; width: 100%; font-size: 10px; overflow-wrap: anywhere; }
   .site-footer__bottom > p { font-size: 9px; line-height: 1.5; }
+}
+
+@media (max-width: 380px) {
+  .brand__name { font-size: .62rem; }
+  .nav { gap: 0 .35rem; }
+  .nav__link { font-size: 10.5px; }
 }
 
 @media (max-height: 620px) and (min-width: 721px) {

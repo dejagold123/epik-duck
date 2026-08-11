@@ -13,6 +13,7 @@ import { useRevealOnView } from './hooks/useRevealOnView.js';
 import { chapters } from './data/chapters.js';
 
 const navigation = ['Lore', 'Vault', 'Community', 'About'];
+const desktopNavigation = ['Home', ...navigation];
 const mobileNavigation = ['Home', ...navigation];
 const contractAddress = '3BgwJ8b7b9hHX4sgfZ2KJhv9496CoVfsMK2YePevsBRw';
 
@@ -167,14 +168,17 @@ function App() {
           </div>
 
           <nav className="nav nav--desktop" aria-label="Primary navigation">
-            {navigation.map((item, index) => {
+            {desktopNavigation.map((item, index) => {
               const sectionId = item.toLowerCase();
+              const isHome = sectionId === 'home';
+              const isActive = isHome ? activeSection === '' : activeSection === sectionId;
               return (
                 <a
                   key={item}
-                  className={`nav__link${activeSection === sectionId ? ' is-active' : ''}`}
-                  href={`#${sectionId}`}
-                  aria-current={activeSection === sectionId ? 'location' : undefined}
+                  className={`nav__link${isActive ? ' is-active' : ''}`}
+                  href={isHome ? '#top' : `#${sectionId}`}
+                  aria-current={isActive ? 'location' : undefined}
+                  onClick={isHome ? () => setMobilePage('home') : undefined}
                   style={{ '--nav-index': index }}
                 >
                   {item}
@@ -416,14 +420,17 @@ function App() {
           <span className="brand__name">EPIK-DUCK</span>
         </a>
         <nav className="nav nav--desktop nav--sticky" aria-label="Sticky navigation">
-          {navigation.map((item, index) => {
+          {desktopNavigation.map((item, index) => {
             const sectionId = item.toLowerCase();
+            const isHome = sectionId === 'home';
+            const isActive = isHome ? activeSection === '' : activeSection === sectionId;
             return (
               <a
                 key={item}
-                className={`nav__link${activeSection === sectionId ? ' is-active' : ''}`}
-                href={`#${sectionId}`}
-                aria-current={activeSection === sectionId ? 'location' : undefined}
+                className={`nav__link${isActive ? ' is-active' : ''}`}
+                href={isHome ? '#top' : `#${sectionId}`}
+                aria-current={isActive ? 'location' : undefined}
+                onClick={isHome ? () => setMobilePage('home') : undefined}
                 tabIndex={isStickyNavVisible ? undefined : -1}
                 style={{ '--nav-index': index }}
               >

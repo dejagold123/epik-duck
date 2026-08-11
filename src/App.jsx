@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import logo from './assets/epik-logo-v2.png';
 import heroArtwork from './assets/hero-artwork-v2.png';
 import mobileHeroArtwork from './assets/hero-artwork-mobile.png';
@@ -12,6 +12,7 @@ import { useRevealOnView } from './hooks/useRevealOnView.js';
 import { chapters } from './data/chapters.js';
 
 const navigation = ['Lore', 'Vault', 'Community', 'About'];
+const mobileNavigation = ['Home', ...navigation];
 const contractAddress = '3BgwJ8b7b9hHX4sgfZ2KJhv9496CoVfsMK2YePevsBRw';
 
 function App() {
@@ -21,7 +22,9 @@ function App() {
   const [loreVisible, setLoreVisible] = useState(false);
   const [chapterTransition, setChapterTransition] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mobilePage, setMobilePage] = useState('home');
   const transitionTimer = useRef(null);
+  const copyStatusTimer = useRef(null);
   const [ecosystemRef, ecosystemVisible] = useRevealOnView(.22);
   const [destinationsRef, destinationsVisible] = useRevealOnView(.1);
   const [footerRef, footerVisible] = useRevealOnView(.12);
@@ -42,11 +45,65 @@ function App() {
   const goPrevious = () => changeChapter(Math.max(0, chapterIndex - 1), 'previous');
   const goNext = () => changeChapter(Math.min(chapters.length - 1, chapterIndex + 1), 'next');
   const copyContractAddress = async () => {
-    await navigator.clipboard.writeText(contractAddress);
+    let copied = false;
+
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(contractAddress);
+        copied = true;
+      }
+    } catch {
+      copied = false;
+    }
+
+    if (!copied) {
+      const temporaryInput = document.createElement('textarea');
+      temporaryInput.value = contractAddress;
+      temporaryInput.setAttribute('readonly', '');
+      temporaryInput.style.position = 'fixed';
+      temporaryInput.style.top = '-999px';
+      temporaryInput.style.opacity = '0';
+      document.body.appendChild(temporaryInput);
+      temporaryInput.select();
+      temporaryInput.setSelectionRange(0, temporaryInput.value.length);
+
+      try {
+        document.execCommand('copy');
+      } finally {
+        document.body.removeChild(temporaryInput);
+      }
+    }
+
     setIsContractCopied(true);
-    window.setTimeout(() => setIsContractCopied(false), 1800);
+    window.clearTimeout(copyStatusTimer.current);
+    copyStatusTimer.current = window.setTimeout(() => setIsContractCopied(false), 1800);
   };
 
+  const goToMobilePage = (event, item) => {
+    event.preventDefault();
+    const sectionId = item.toLowerCase();
+    const targetId = sectionId === 'home' ? 'top' : sectionId;
+    setMobilePage(sectionId);
+    setIsMobileMenuOpen(false);
+    window.history.replaceState(null, '', sectionId === 'home' ? window.location.pathname + window.location.search : `#${targetId}`);
+    window.setTimeout(() => {
+      if (sectionId === 'home') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+      document.getElementById(targetId)?.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    }, 0);
+  };
+
+  useEffect(() => {
+    const syncMobilePageFromHash = () => {
+      const hashPage = window.location.hash.replace('#', '').toLowerCase();
+      setMobilePage(navigation.map((item) => item.toLowerCase()).includes(hashPage) ? hashPage : 'home');
+    };
+    syncMobilePageFromHash();
+    window.addEventListener('hashchange', syncMobilePageFromHash);
+    return () => window.removeEventListener('hashchange', syncMobilePageFromHash);
+  }, []);
   useEffect(() => {
     if (typeof IntersectionObserver === 'undefined') return undefined;
     const sections = navigation
@@ -78,13 +135,16 @@ function App() {
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => () => window.clearTimeout(transitionTimer.current), []);
+  useEffect(() => () => {
+    window.clearTimeout(transitionTimer.current);
+    window.clearTimeout(copyStatusTimer.current);
+  }, []);
 
   return (
-    <main>
+    <main data-mobile-page={mobilePage}>
       <section className="hero">
         <header className="header reveal reveal--header">
-          <a className="brand" href="#top" aria-label="EPIK-DUCK home">
+          <a className="brand" href="#top" aria-label="EPIK-DUCK home" onClick={() => setMobilePage('home')}>
             <img className="brand__logo" src={logo} alt="EPIK-DUCK logo" />
             <span className="brand__name">EPIK-DUCK</span>
           </a>
@@ -124,19 +184,24 @@ function App() {
 
         {isMobileMenuOpen && (
           <nav className="mobile-menu is-open" aria-label="Mobile navigation">
-            {navigation.map((item) => {
+            {mobileNavigation.map((item) => {
               const sectionId = item.toLowerCase();
+              const href = sectionId === 'home' ? '#top' : `#${sectionId}`;
+              const isActive = sectionId === 'home' ? mobilePage === 'home' : activeSection === sectionId || mobilePage === sectionId;
               return (
                 <a
                   key={item}
-                  className={activeSection === sectionId ? 'is-active' : ''}
-                  href={`#${sectionId}`}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={isActive ? 'is-active' : ''}
+                  href={href}
+                  onClick={(event) => goToMobilePage(event, item)}
                 >
                   {item}
                 </a>
               );
             })}
+            <div className="mobile-menu__market">
+              <PriceTicker />
+            </div>
           </nav>
         )}
 
@@ -149,7 +214,10 @@ function App() {
             <p className="hero__eyebrow hero__eyebrow-accent reveal reveal--eyebrow">
               &mdash; SOLANA&nbsp;&nbsp; EST - 2024 &mdash;
             </p>
-            <h1 id="hero-title" className="hero__title reveal reveal--title">TEH EPIK DUCK</h1>
+            <h1 id="hero-title" className="hero__title reveal reveal--title">
+              <span className="hero__title-line">TEH EPIK</span>
+              <span className="hero__title-line">DUCK</span>
+            </h1>
             <div className="hero__subtitle reveal reveal--subtitle">
               <p>Born as a joke, Forged by conviction.</p>
               <p>The duck that refused to die.</p>
@@ -158,7 +226,7 @@ function App() {
 
           <div className="hero__footer">
             <div className="hero__actions reveal reveal--actions" aria-label="Hero actions">
-              <a className="cta" href="#lore">Read the Lore</a>
+              <a className="cta" href="#lore" onClick={() => setMobilePage('lore')}>Read the Lore</a>
               <a
                 className="cta cta--primary"
                 href="https://jup.ag/swap?sell=So11111111111111111111111111111111111111112&buy=3BgwJ8b7b9hHX4sgfZ2KJhv9496CoVfsMK2YePevsBRw"
@@ -331,6 +399,12 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
+
 
 
 

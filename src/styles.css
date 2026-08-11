@@ -576,7 +576,7 @@ button { font: inherit; }
 }
 .vault-panel__details li::before {
   margin-right: .5rem;
-  content: '—';
+  content: '-';
   color: var(--accent);
 }
 .vault-panel__cta {
@@ -1222,3 +1222,441 @@ button { font: inherit; }
   .site-footer__contract code { overflow-wrap: anywhere; }
 }
 @media (max-width: 359px) { .hero { padding-inline: 12px; } .brand__name { font-size: 14px; } .destination-section { width: calc(100% - 32px); } .destination-panel, .destination-panel--about { padding: 20px; } }
+/* Mobile correction pass: hamburger menu, one-url page views, and hero tightening. */
+@media (max-width: 720px) {
+  .mobile-menu {
+    gap: 6px;
+  }
+
+  .mobile-menu__market {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+    margin-top: 8px;
+    padding: 12px 14px;
+    border-top: 1px solid var(--divider);
+    color: var(--text-body);
+  }
+
+  .mobile-menu__market .price-ticker {
+    display: inline-flex;
+    min-height: 32px;
+    font-size: 13px;
+  }
+
+  .hero__artwork {
+    height: clamp(585px, 79svh, 684px);
+    min-height: 0;
+  }
+
+  .hero__artwork-image--mobile {
+    object-position: center 12%;
+    transform: translateY(-5%) scale(1.08);
+  }
+
+  .hero__content {
+    padding: 1.45rem 16px 0;
+    transform: translateY(-42px);
+  }
+
+  .hero__eyebrow {
+    margin-bottom: .55rem;
+    font-size: 8px;
+    letter-spacing: .11em;
+  }
+
+  .hero__subtitle {
+    margin-top: .9rem;
+    font-size: 13px;
+    line-height: 1.42;
+  }
+
+  .hero__footer {
+    padding: 0 16px 0;
+    transform: translateY(-40px);
+  }
+
+  .scroll-cue {
+    display: none;
+  }
+
+  main:not([data-mobile-page='home']) .hero {
+    min-height: auto;
+    padding-bottom: 12px;
+  }
+
+  main:not([data-mobile-page='home']) .hero__artwork {
+    display: none;
+  }
+
+  main[data-mobile-page='home'] .chapter-review,
+  main[data-mobile-page='home'] .destination-section {
+    display: none;
+  }
+
+  main[data-mobile-page='lore'] .ecosystem-band,
+  main[data-mobile-page='lore'] .destination-section,
+  main[data-mobile-page='vault'] .chapter-review,
+  main[data-mobile-page='vault'] .ecosystem-band,
+  main[data-mobile-page='community'] .chapter-review,
+  main[data-mobile-page='community'] .ecosystem-band,
+  main[data-mobile-page='about'] .chapter-review,
+  main[data-mobile-page='about'] .ecosystem-band {
+    display: none;
+  }
+
+  main[data-mobile-page='vault'] .destination-panel--about,
+  main[data-mobile-page='vault'] .destination-panel--community,
+  main[data-mobile-page='community'] .destination-panel--about,
+  main[data-mobile-page='community'] .destination-panel--vault {
+    display: none;
+  }
+
+  main[data-mobile-page='about'] .destination-section__right-column {
+    display: none;
+  }
+
+  main[data-mobile-page='vault'] .destination-section,
+  main[data-mobile-page='community'] .destination-section,
+  main[data-mobile-page='about'] .destination-section {
+    min-height: calc(100svh - 84px);
+    padding-top: 28px;
+  }
+
+  main[data-mobile-page='lore'] .chapter-review {
+    min-height: calc(100svh - 84px);
+    padding-top: 56px;
+  }
+}
+
+@media (max-width: 359px) {
+  .hero__content {
+    transform: translateY(-34px);
+  }
+
+  .hero__footer {
+    transform: translateY(-32px);
+  }
+
+  .hero__actions {
+    grid-template-columns: 1fr;
+  }
+}
+/* Mobile title correction: forced two-line hero title below 768px. */
+.hero__title-line {
+  display: inline;
+}
+
+@media (max-width: 767px) {
+  .hero__content {
+    transform: translateY(-92px);
+  }
+
+  .hero__title {
+    display: grid;
+    justify-items: center;
+    max-width: min(100%, 9ch);
+    margin-inline: auto;
+    overflow-wrap: normal;
+    white-space: normal;
+    font-size: 44px;
+    line-height: .84;
+  }
+
+  .hero__title-line {
+    display: block;
+    max-width: 100%;
+  }
+
+  .hero__subtitle {
+    margin-top: 14px;
+    transform: translateY(14px);
+  }
+}
+
+@media (max-width: 359px) {
+  .hero__content {
+    transform: translateY(-78px);
+  }
+
+  .hero__title {
+    font-size: 44px;
+  }
+}
+/* Mobile hero text placement correction: larger title and lower face-safe placement. */
+@media (max-width: 767px) {
+  .hero__content {
+    transform: translateY(-56px);
+  }
+
+  .hero__eyebrow {
+    margin-bottom: 1.05rem;
+  }
+
+  .hero__title {
+    max-width: min(100%, 10ch);
+    font-size: 55px;
+    line-height: .82;
+  }
+
+  .hero__subtitle {
+    margin-top: 18px;
+    transform: translateY(18px);
+  }
+}
+
+@media (max-width: 359px) {
+  .hero__content {
+    transform: translateY(-42px);
+  }
+
+  .hero__title {
+    font-size: 55px;
+  }
+}
+/* Mobile nav stacking correction for section views. */
+@media (max-width: 767px) {
+  .hero {
+    z-index: 80;
+  }
+
+  .header {
+    z-index: 120;
+  }
+
+  .mobile-menu {
+    z-index: 110;
+  }
+}
+/* Mobile section correction pass: ecosystem, lore, and vault. */
+@media (max-width: 767px) {
+  .ecosystem-band {
+    padding: 44px 16px;
+  }
+
+  .ecosystem-strip {
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    min-height: 0;
+    padding: 16px;
+  }
+
+  .ecosystem-strip__label {
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+  }
+
+  .ecosystem-strip__logos {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    gap: 10px;
+  }
+
+  .ecosystem-strip__logos figure {
+    min-width: 0;
+    gap: 6px;
+  }
+
+  .ecosystem-strip__logos figure:nth-child(3) {
+    grid-column: auto;
+    justify-self: stretch;
+  }
+
+  .ecosystem-strip__logos img {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+    border-radius: 6px;
+  }
+
+  .ecosystem-strip__logos figcaption {
+    font-size: 9px;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .chapter-review {
+    padding: 64px 16px;
+  }
+
+  .chapter-stage {
+    width: 100%;
+  }
+
+  .chapter-card {
+    width: min(100%, 360px);
+    padding: 14px;
+    border-radius: 20px;
+    grid-template-rows: 22px auto auto auto;
+  }
+
+  .chapter-card__meta {
+    gap: 8px;
+    font-size: 10px;
+  }
+
+  .chapter-card__image-wrap {
+    aspect-ratio: 16 / 10;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 12px;
+  }
+
+  .chapter-card__image {
+    object-fit: contain;
+    background: #080a0c;
+  }
+
+  .chapter-card__story {
+    padding-top: 14px;
+  }
+
+  .chapter-card__title {
+    margin-bottom: 8px;
+    font-size: 28px;
+    line-height: .98;
+  }
+
+  .chapter-card__copy {
+    gap: 7px;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .chapter-card__navigation {
+    margin-top: 14px;
+    min-height: 44px;
+  }
+
+  .chapter-card__navigation button {
+    min-height: 44px;
+  }
+
+  .destination-panel--vault {
+    padding-top: 24px;
+  }
+
+  .vault-panel__content {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 18px;
+  }
+
+  .vault-calculator {
+    order: 1;
+    padding-left: 0;
+  }
+
+  .vault-panel__details {
+    order: 2;
+    gap: 12px;
+    padding: 16px 0 0;
+    border-top: 1px solid rgba(164, 168, 172, .42);
+    border-right: 0;
+  }
+
+  .vault-panel__details p {
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .vault-panel__details ul {
+    gap: 8px;
+    font-size: 13px;
+    line-height: 1.35;
+  }
+}
+
+@media (max-width: 359px) {
+  .chapter-card {
+    width: min(100%, 332px);
+    padding: 12px;
+  }
+
+  .chapter-card__title {
+    font-size: 26px;
+  }
+
+  .chapter-card__copy {
+    font-size: 13px;
+    line-height: 1.42;
+  }
+}
+/* Mobile page-view behavior extended through the full sub-768 range. */
+@media (min-width: 721px) and (max-width: 767px) {
+  .mobile-menu {
+    gap: 6px;
+  }
+
+  .mobile-menu__market {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+    margin-top: 8px;
+    padding: 12px 14px;
+    border-top: 1px solid var(--divider);
+    color: var(--text-body);
+  }
+
+  .mobile-menu__market .price-ticker {
+    display: inline-flex;
+    min-height: 32px;
+    font-size: 13px;
+  }
+
+  main:not([data-mobile-page='home']) .hero {
+    min-height: auto;
+    padding-bottom: 12px;
+  }
+
+  main:not([data-mobile-page='home']) .hero__artwork {
+    display: none;
+  }
+
+  main[data-mobile-page='home'] .chapter-review,
+  main[data-mobile-page='home'] .destination-section {
+    display: none;
+  }
+
+  main[data-mobile-page='lore'] .ecosystem-band,
+  main[data-mobile-page='lore'] .destination-section,
+  main[data-mobile-page='vault'] .chapter-review,
+  main[data-mobile-page='vault'] .ecosystem-band,
+  main[data-mobile-page='community'] .chapter-review,
+  main[data-mobile-page='community'] .ecosystem-band,
+  main[data-mobile-page='about'] .chapter-review,
+  main[data-mobile-page='about'] .ecosystem-band {
+    display: none;
+  }
+
+  main[data-mobile-page='vault'] .destination-panel--about,
+  main[data-mobile-page='vault'] .destination-panel--community,
+  main[data-mobile-page='community'] .destination-panel--about,
+  main[data-mobile-page='community'] .destination-panel--vault {
+    display: none;
+  }
+
+  main[data-mobile-page='about'] .destination-section__right-column {
+    display: none;
+  }
+
+  main[data-mobile-page='vault'] .destination-section,
+  main[data-mobile-page='community'] .destination-section,
+  main[data-mobile-page='about'] .destination-section {
+    min-height: calc(100svh - 84px);
+    padding-top: 28px;
+  }
+
+  main[data-mobile-page='lore'] .chapter-review {
+    min-height: calc(100svh - 84px);
+    padding-top: 56px;
+  }
+}
+

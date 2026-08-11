@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import logo from './assets/epik-logo-v2.png';
 import heroArtwork from './assets/hero-artwork-v2.png';
 import mobileHeroArtwork from './assets/hero-artwork-mobile.png';
@@ -394,6 +395,7 @@ function App() {
           <p>&copy; 2024&ndash;2026 EPIK-DUCK. $EPIK is a meme coin, not financial advice.</p>
         </div>
       </footer>
+      <SpeedInsights />
     </main>
   );
 }

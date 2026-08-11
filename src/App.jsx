@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+﻿import React, { useEffect, useRef, useState } from 'react';
 import logo from './assets/epik-logo-v2.png';
 import heroArtwork from './assets/hero-artwork-v2.png';
+import mobileHeroArtwork from './assets/hero-artwork-mobile.png';
 import rektBrands from './assets/rekt-brands.jpg';
 import yeet from './assets/yeet.jpg';
 import pantheonVaults from './assets/pantheon-vaults.jpg';
@@ -19,6 +20,7 @@ function App() {
   const [activeSection, setActiveSection] = useState('');
   const [loreVisible, setLoreVisible] = useState(false);
   const [chapterTransition, setChapterTransition] = useState(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const transitionTimer = useRef(null);
   const [ecosystemRef, ecosystemVisible] = useRevealOnView(.22);
   const [destinationsRef, destinationsVisible] = useRevealOnView(.1);
@@ -91,31 +93,61 @@ function App() {
             <PriceTicker />
           </div>
 
-          <nav className="nav" aria-label="Primary navigation">
+          <nav className="nav nav--desktop" aria-label="Primary navigation">
             {navigation.map((item, index) => {
               const sectionId = item.toLowerCase();
               return (
-              <a
-                key={item}
-                className={`nav__link${activeSection === sectionId ? ' is-active' : ''}`}
-                href={`#${sectionId}`}
-                aria-current={activeSection === sectionId ? 'location' : undefined}
-                style={{ '--nav-index': index }}
-              >
-                {item}
-              </a>
+                <a
+                  key={item}
+                  className={`nav__link${activeSection === sectionId ? ' is-active' : ''}`}
+                  href={`#${sectionId}`}
+                  aria-current={activeSection === sectionId ? 'location' : undefined}
+                  style={{ '--nav-index': index }}
+                >
+                  {item}
+                </a>
               );
             })}
           </nav>
+          <button
+            className={`mobile-menu-toggle${isMobileMenuOpen ? ' is-open' : ''}`}
+            type="button"
+            aria-label="Toggle navigation"
+            aria-expanded={isMobileMenuOpen}
+            onClick={() => setIsMobileMenuOpen((open) => !open)}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
         </header>
+
+        {isMobileMenuOpen && (
+          <nav className="mobile-menu is-open" aria-label="Mobile navigation">
+            {navigation.map((item) => {
+              const sectionId = item.toLowerCase();
+              return (
+                <a
+                  key={item}
+                  className={activeSection === sectionId ? 'is-active' : ''}
+                  href={`#${sectionId}`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {item}
+                </a>
+              );
+            })}
+          </nav>
+        )}
 
         <div id="top" className="hero__artwork">
           <img className="hero__artwork-image" src={heroArtwork} alt="" aria-hidden="true" />
+          <img className="hero__artwork-image hero__artwork-image--mobile" src={mobileHeroArtwork} alt="" aria-hidden="true" />
           <div className="hero__artwork-shade" aria-hidden="true" />
 
           <section className="hero__content" aria-labelledby="hero-title">
             <p className="hero__eyebrow hero__eyebrow-accent reveal reveal--eyebrow">
-              — SOLANA&nbsp;&nbsp; EST - 2024 —
+              &mdash; SOLANA&nbsp;&nbsp; EST - 2024 &mdash;
             </p>
             <h1 id="hero-title" className="hero__title reveal reveal--title">TEH EPIK DUCK</h1>
             <div className="hero__subtitle reveal reveal--subtitle">
@@ -195,7 +227,7 @@ function App() {
           <h2>About Epik</h2>
           <div className="about-panel__content">
             <p className="about-panel__intro">
-              E-DUCK ($EPIK) is a Solana meme coin inspired by the classic “Teh Epik Duck is coming” meme.
+              E-DUCK ($EPIK) is a Solana meme coin inspired by the classic &ldquo;Teh Epik Duck is coming&rdquo; meme.
               Launched in May 2024 as a joke on stream, it was later rebranded to E-DUCK while keeping the $EPIK ticker.
             </p>
 
@@ -204,7 +236,7 @@ function App() {
               <div><dt>Ticker</dt><dd>$EPIK</dd></div>
               <div><dt>Network</dt><dd>Solana</dd></div>
               <div><dt>Decimals</dt><dd>6</dd></div>
-              <div><dt>Supply</dt><dd>≈ 846.2–846.7M EPIK<br />Max commonly listed: 1B</dd></div>
+              <div><dt>Supply</dt><dd>&asymp; 846.2&ndash;846.7M EPIK<br />Max commonly listed: 1B</dd></div>
             </dl>
 
             <div className="about-panel__contract">
@@ -219,7 +251,7 @@ function App() {
                 {isContractCopied ? 'Contract address copied to clipboard.' : ''}
               </span>
               <a href={`https://solscan.io/token/${contractAddress}`} target="_blank" rel="noreferrer">
-                Verify on Solscan ↗
+                Verify on Solscan &#8599;
               </a>
             </div>
 
@@ -231,7 +263,7 @@ function App() {
             <h2>The Pantheon Vault</h2>
             <div className="vault-panel__content">
               <div className="vault-panel__details">
-                <p>Pantheon is EPIK’s official staking vault, where holders lock $EPIK for six months to earn monthly rewards.</p>
+                <p>Pantheon is EPIK&rsquo;s official staking vault, where holders lock $EPIK for six months to earn monthly rewards.</p>
                 <p>$EPIK uses the vault to reward committed holders while reducing the tokens available to trade. Early-exit penalties return to remaining stakers, concentrating the benefits with long-term participation.</p>
                 <ul>
                   <li>Six-month staking period</li>
@@ -291,7 +323,7 @@ function App() {
             </button>
             <a href={`https://solscan.io/token/${contractAddress}`} target="_blank" rel="noreferrer">Solscan</a>
           </div>
-          <p>© 2024–2026 EPIK-DUCK. $EPIK is a meme coin, not financial advice.</p>
+          <p>&copy; 2024&ndash;2026 EPIK-DUCK. $EPIK is a meme coin, not financial advice.</p>
         </div>
       </footer>
     </main>
@@ -299,3 +331,9 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
+

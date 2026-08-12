@@ -285,7 +285,7 @@ button { font: inherit; }
 .reveal--actions { animation-delay: .75s; }
 .reveal--scroll { animation-delay: .9s; }
 
-.chapter-review { display: grid; justify-items: center; min-height: 100vh; padding: clamp(4rem, 7vw, 7rem) var(--page-gutter) clamp(6rem, 10vw, 10rem); border-top: 1px solid var(--divider);
+.chapter-review { display: grid; justify-items: center; min-height: 100vh; padding: var(--section-space) var(--page-gutter); border-top: 1px solid var(--divider);
  border-bottom: 1px solid var(--divider); background: #04060d; }
 .chapter-review::before {
   width: 0;
@@ -388,7 +388,7 @@ button { font: inherit; }
 .chapter-card__navigation button:hover { color: var(--accent); }
 
 .ecosystem-band {
-  padding: clamp(1.5rem, 2.7vw, 2.7rem) var(--page-gutter);
+  padding: var(--section-space-compact) var(--page-gutter);
   border-bottom: 1px solid var(--divider);
   background: #04060d;
 }
@@ -451,7 +451,7 @@ button { font: inherit; }
   width: min(calc(100% - (var(--page-gutter) * 2)), 1728px);
   min-height: 680px;
   margin: 0 auto;
-  padding: clamp(4rem, 7vw, 7rem) 0 clamp(6rem, 10vw, 10rem);
+  padding: var(--section-space) 0;
 }
 .destination-section__right-column {
   display: grid;
@@ -756,7 +756,7 @@ button { font: inherit; }
 }
 
 .site-footer {
-  padding: clamp(3rem, 5vw, 5rem) var(--page-gutter) clamp(1.25rem, 2vw, 2rem);
+  padding: var(--section-space) var(--page-gutter) var(--section-space-compact);
   border-top: 1px solid var(--divider);
   background: #000;
 }
@@ -1375,6 +1375,11 @@ button { font: inherit; }
 }
 
 @media (max-width: 767px) {
+  :root {
+    --section-space: 4rem;
+    --section-space-compact: 3rem;
+  }
+
   .hero__content {
     transform: translateY(-92px);
   }
@@ -1441,6 +1446,29 @@ button { font: inherit; }
     font-size: 55px;
   }
 }
+
+/* Final section rhythm: 8px-based layout spacing, with a smaller ecosystem band. */
+:root {
+  --section-space: clamp(4rem, 6.7vw, 6rem);
+  --section-space-compact: clamp(2rem, 3.35vw, 3rem);
+}
+
+.chapter-review,
+.destination-section { padding-top: var(--section-space); padding-bottom: var(--section-space); }
+.ecosystem-band { padding-top: var(--section-space-compact); padding-bottom: var(--section-space-compact); }
+.site-footer { padding-top: var(--section-space); padding-bottom: var(--section-space-compact); }
+
+@media (max-width: 767px) {
+  :root {
+    --section-space: 4rem;
+    --section-space-compact: 3rem;
+  }
+
+  .chapter-review,
+  .destination-section { padding-top: var(--section-space); padding-bottom: var(--section-space); }
+  .ecosystem-band { padding-top: var(--section-space-compact); padding-bottom: var(--section-space-compact); }
+  .site-footer { padding-top: var(--section-space); padding-bottom: 2rem; }
+}
 /* Mobile nav stacking correction for section views. */
 @media (max-width: 767px) {
   .hero {
@@ -1458,7 +1486,7 @@ button { font: inherit; }
 /* Mobile section correction pass: ecosystem, lore, and vault. */
 @media (max-width: 767px) {
   .ecosystem-band {
-    padding: 44px 16px;
+    padding: var(--section-space-compact) 16px;
   }
 
   .ecosystem-strip {
@@ -1507,7 +1535,7 @@ button { font: inherit; }
   }
 
   .chapter-review {
-    padding: 64px 16px;
+    padding: var(--section-space) 16px;
   }
 
   .chapter-stage {

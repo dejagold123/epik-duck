@@ -4,7 +4,7 @@ import reactHooks from 'eslint-plugin-react-hooks';
 
 export default [
   {
-    ignores: ['dist/**', 'node_modules/**', 'public/**', 'scripts/**', '**/*.{png,jpg,jpeg,webp,docx}'],
+    ignores: ['dist/**', 'node_modules/**', 'public/**', 'scripts/**', 'verify.mjs', '**/*.{png,jpg,jpeg,webp,docx}'],
   },
   js.configs.recommended,
   {

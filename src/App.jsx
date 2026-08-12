@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import logo from './assets/epik-logo-v2.webp';
 import heroArtwork from './assets/hero-artwork-v2.webp';
-import mobileHeroArtwork from './assets/hero-artwork-mobile.webp';
 import rektBrands from './assets/rekt-brands.jpg';
 import yeet from './assets/yeet.jpg';
 import pantheonVaults from './assets/pantheon-vaults.jpg';
@@ -229,7 +228,6 @@ function App() {
 
         <div id="top" className="hero__artwork">
           <picture className="hero__artwork-picture">
-            <source media="(max-width: 720px)" srcSet={mobileHeroArtwork} />
             <img className="hero__artwork-image" src={heroArtwork} alt="" aria-hidden="true" width="1668" height="943" fetchPriority="high" decoding="async" />
           </picture>
           <div className="hero__artwork-shade" aria-hidden="true" />

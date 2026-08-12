@@ -1202,7 +1202,7 @@ button { font: inherit; }
   .mobile-menu a.is-active, .mobile-menu a:hover, .mobile-menu a:focus-visible { background: rgba(77,120,245,.16); color: #fff; }
   .hero { padding: 12px 16px 32px; }
   .hero__artwork { min-height: clamp(650px, 88svh, 760px); margin-top: 12px; border-radius: 28px; }
-  .hero__artwork-image { object-position: center 26%; transform: scale(1.02); }
+  .hero__artwork-image { object-position: center top; transform: scale(1.02); }
   .hero__content { align-self: center; padding: 3rem 16px 1.5rem; }
   .hero__eyebrow { font-size: 13px; letter-spacing: .18em; }
   .hero__title { max-width: 7.5em; margin-inline: auto; font-size: clamp(38px, 11vw, 44px); line-height: .94; }

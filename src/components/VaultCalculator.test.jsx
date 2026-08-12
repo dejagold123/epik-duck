@@ -1,6 +1,9 @@
 import React from 'react';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
+import { cleanup, render, screen } from '@testing-library/react';
 import { calculateExitReturn, calculateMonthlyRewards } from './VaultCalculator.jsx';
+
+afterEach(cleanup);
 
 describe('vault calculations', () => {
   it('calculates monthly rewards from editable assumptions', () => {
@@ -11,5 +14,12 @@ describe('vault calculations', () => {
   it('clamps invalid exit inputs to zero', () => {
     expect(calculateExitReturn(-10, 0.9)).toBe(0);
     expect(calculateExitReturn(100, 0.8)).toBe(80);
+  });
+
+  it('renders all calculator modes in one tablist', async () => {
+    const { VaultCalculator } = await import('./VaultCalculator.jsx');
+    render(<VaultCalculator />);
+    expect(screen.getAllByRole('tab')).toHaveLength(5);
+    expect(screen.getByRole('tab', { name: 'Stake' }).getAttribute('aria-selected')).toBe('true');
   });
 });

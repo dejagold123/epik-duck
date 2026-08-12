@@ -75,6 +75,13 @@ try {
       await page.waitForTimeout(50);
       assert(await page.locator('main').getAttribute('data-mobile-page') === 'lore', `${viewport.name}: Lore view did not activate`);
       assert(await page.locator('#lore').isVisible(), `${viewport.name}: Lore section is hidden after navigation`);
+      await menuToggle.click();
+      await mobileNav.getByRole('link', { name: 'Vault', exact: true }).click();
+      await page.waitForTimeout(100);
+      const vaultTabs = page.locator('.vault-calculator__tabs button');
+      const tabGeometry = await vaultTabs.evaluateAll((buttons) => buttons.map((button) => button.getBoundingClientRect().toJSON()));
+      assert(tabGeometry.length === 5, `${viewport.name}: vault calculator tabs are incomplete`);
+      assert(new Set(tabGeometry.map(({ y }) => Math.round(y))).size === 1, `${viewport.name}: vault calculator tabs wrapped onto multiple rows`);
     } else {
       const desktopNav = page.locator('.header .nav');
       assert(await desktopNav.getByRole('link', { name: 'Home', exact: true }).count() === 1, `${viewport.name}: desktop Home link is missing`);

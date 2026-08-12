@@ -1238,8 +1238,8 @@ button { font: inherit; }
   .about-panel__copy-button { justify-self: start; min-height: 44px; padding: 0 14px; font-size: 12px; }
   .vault-panel__content { gap: 24px; }
   .vault-panel__details { gap: 16px; }
-  .vault-calculator__tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-  .vault-calculator__tabs button { min-height: 48px; font-size: 10px; }
+  .vault-calculator__tabs { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; }
+  .vault-calculator__tabs button { min-height: 44px; padding-inline: 2px; font-size: 9px; line-height: 1.1; white-space: normal; }
   .vault-calculator__field input { font-size: 16px; }
   .vault-calculator__result strong { font-size: 20px; }
   .vault-calculator__action { width: 100%; min-height: 48px; font-size: 12px; }

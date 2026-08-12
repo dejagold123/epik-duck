@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
-import logo from './assets/epik-logo-v2.png';
-import heroArtwork from './assets/hero-artwork-v2.png';
-import mobileHeroArtwork from './assets/hero-artwork-mobile.png';
+import logo from './assets/epik-logo-v2.webp';
+import heroArtwork from './assets/hero-artwork-v2.webp';
+import mobileHeroArtwork from './assets/hero-artwork-mobile.webp';
 import rektBrands from './assets/rekt-brands.jpg';
 import yeet from './assets/yeet.jpg';
 import pantheonVaults from './assets/pantheon-vaults.jpg';
@@ -20,6 +20,7 @@ const contractAddress = '3BgwJ8b7b9hHX4sgfZ2KJhv9496CoVfsMK2YePevsBRw';
 function App() {
   const [chapterIndex, setChapterIndex] = useState(0);
   const [isContractCopied, setIsContractCopied] = useState(false);
+  const [copyError, setCopyError] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [loreVisible, setLoreVisible] = useState(false);
   const [chapterTransition, setChapterTransition] = useState(null);
@@ -50,6 +51,7 @@ function App() {
   const goNext = () => changeChapter(Math.min(chapters.length - 1, chapterIndex + 1), 'next');
   const copyContractAddress = async () => {
     let copied = false;
+    setCopyError(false);
 
     try {
       if (navigator.clipboard && window.isSecureContext) {
@@ -72,15 +74,18 @@ function App() {
       temporaryInput.setSelectionRange(0, temporaryInput.value.length);
 
       try {
-        document.execCommand('copy');
+        copied = document.execCommand('copy');
+      } catch {
+        copied = false;
       } finally {
         document.body.removeChild(temporaryInput);
       }
     }
 
-    setIsContractCopied(true);
+    setIsContractCopied(copied);
+    setCopyError(!copied);
     window.clearTimeout(copyStatusTimer.current);
-    copyStatusTimer.current = window.setTimeout(() => setIsContractCopied(false), 1800);
+    if (copied) copyStatusTimer.current = window.setTimeout(() => setIsContractCopied(false), 1800);
   };
 
   const goToMobilePage = (event, item) => {
@@ -159,7 +164,7 @@ function App() {
       <section className="hero">
         <header ref={headerRef} className="header reveal reveal--header">
           <a className="brand" href="#top" aria-label="EPIK-DUCK home" onClick={() => setMobilePage('home')}>
-            <img className="brand__logo" src={logo} alt="EPIK-DUCK logo" />
+            <img className="brand__logo" src={logo} alt="EPIK-DUCK logo" width="1254" height="1254" decoding="async" />
             <span className="brand__name">EPIK-DUCK</span>
           </a>
 
@@ -223,8 +228,10 @@ function App() {
         )}
 
         <div id="top" className="hero__artwork">
-          <img className="hero__artwork-image" src={heroArtwork} alt="" aria-hidden="true" />
-          <img className="hero__artwork-image hero__artwork-image--mobile" src={mobileHeroArtwork} alt="" aria-hidden="true" />
+          <picture className="hero__artwork-picture">
+            <source media="(max-width: 720px)" srcSet={mobileHeroArtwork} />
+            <img className="hero__artwork-image" src={heroArtwork} alt="" aria-hidden="true" width="1668" height="943" fetchPriority="high" decoding="async" />
+          </picture>
           <div className="hero__artwork-shade" aria-hidden="true" />
 
           <section className="hero__content" aria-labelledby="hero-title">
@@ -292,15 +299,15 @@ function App() {
           <p className="ecosystem-strip__label">Part of the Ecosystem</p>
             <div className="ecosystem-strip__logos" aria-label="Ecosystem members">
               <figure>
-                <img src={rektBrands} alt="Rekt Brands" />
+                <img src={rektBrands} alt="Rekt Brands" width="640" height="640" loading="lazy" decoding="async" />
                 <figcaption>Rekt Brands</figcaption>
               </figure>
               <figure>
-                <img src={yeet} alt="YEET" />
+                <img src={yeet} alt="YEET" width="640" height="640" loading="lazy" decoding="async" />
                 <figcaption>YEET</figcaption>
               </figure>
               <figure>
-                <img src={pantheonVaults} alt="Pantheon Vaults" />
+                <img src={pantheonVaults} alt="Pantheon Vaults" width="640" height="640" loading="lazy" decoding="async" />
                 <figcaption>Pantheon Vaults</figcaption>
               </figure>
           </div>
@@ -329,11 +336,11 @@ function App() {
               <div className="about-panel__contract-row">
                 <code>{contractAddress}</code>
                 <button className="about-panel__copy-button" type="button" onClick={copyContractAddress}>
-                  {isContractCopied ? 'Copied' : 'Copy CA'}
+                  {isContractCopied ? 'Copied' : copyError ? 'Copy failed' : 'Copy CA'}
                 </button>
               </div>
               <span className="about-panel__copy-status" role="status" aria-live="polite">
-                {isContractCopied ? 'Contract address copied to clipboard.' : ''}
+                {isContractCopied ? 'Contract address copied to clipboard.' : copyError ? 'Could not copy the contract address.' : ''}
               </span>
               <a href={`https://solscan.io/token/${contractAddress}`} target="_blank" rel="noreferrer">
                 Verify on Solscan &#8599;
@@ -348,8 +355,8 @@ function App() {
             <h2>The Pantheon Vault</h2>
             <div className="vault-panel__content">
               <div className="vault-panel__details">
-                <p>Pantheon is EPIK&rsquo;s official staking vault, where holders lock $EPIK for six months to earn monthly rewards.</p>
-                <p>$EPIK uses the vault to reward committed holders while reducing the tokens available to trade. Early-exit penalties return to remaining stakers, concentrating the benefits with long-term participation.</p>
+                <p>Pantheon is EPIK&rsquo;s linked staking vault. Check the live vault for current lock, reward and exit terms before staking.</p>
+                <p>The calculator below is illustrative and does not read the vault&rsquo;s current on-chain terms.</p>
                 <ul>
                   <li>Six-month staking period</li>
                   <li>Monthly rewards</li>
@@ -378,7 +385,7 @@ function App() {
         <div className="site-footer__main">
           <div className="site-footer__brand">
             <a className="site-footer__brand-link" href="#top" aria-label="EPIK-DUCK home">
-              <img src={logo} alt="" />
+              <img src={logo} alt="" width="1254" height="1254" loading="lazy" decoding="async" />
               <span>EPIK-DUCK</span>
             </a>
             <p>Born as a joke. Forged by conviction.</p>
@@ -404,7 +411,7 @@ function App() {
             <span>Solana contract</span>
             <code>{contractAddress}</code>
             <button className="site-footer__copy-button" type="button" onClick={copyContractAddress}>
-              {isContractCopied ? 'Copied' : 'Copy CA'}
+              {isContractCopied ? 'Copied' : copyError ? 'Copy failed' : 'Copy CA'}
             </button>
             <a href={`https://solscan.io/token/${contractAddress}`} target="_blank" rel="noreferrer">Solscan</a>
           </div>
@@ -415,8 +422,8 @@ function App() {
         className={`sticky-nav${isStickyNavVisible ? ' is-visible' : ''}`}
         aria-hidden={!isStickyNavVisible}
       >
-        <a className="brand" href="#top" aria-label="EPIK-DUCK home" onClick={() => setMobilePage('home')}>
-          <img className="brand__logo" src={logo} alt="EPIK-DUCK logo" />
+        <a className="brand" href="#top" aria-label="EPIK-DUCK home" onClick={() => setMobilePage('home')} tabIndex={isStickyNavVisible ? undefined : -1}>
+          <img className="brand__logo" src={logo} alt="EPIK-DUCK logo" width="1254" height="1254" decoding="async" />
           <span className="brand__name">EPIK-DUCK</span>
         </a>
         <nav className="nav nav--desktop nav--sticky" aria-label="Sticky navigation">

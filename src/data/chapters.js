@@ -1,10 +1,10 @@
-import chapterOneImage from '../assets/chapter-01.png';
-import chapterTwoImage from '../assets/chapter-02.png';
-import chapterThreeImage from '../assets/chapter-03.png';
-import chapterFourImage from '../assets/chapter-04.png';
-import chapterFiveImage from '../assets/chapter-05.png';
-import chapterSixImage from '../assets/chapter-06.png';
-import chapterSevenImage from '../assets/chapter-07.png';
+import chapterOneImage from '../assets/chapter-01.webp';
+import chapterTwoImage from '../assets/chapter-02.webp';
+import chapterThreeImage from '../assets/chapter-03.webp';
+import chapterFourImage from '../assets/chapter-04.webp';
+import chapterFiveImage from '../assets/chapter-05.webp';
+import chapterSixImage from '../assets/chapter-06.webp';
+import chapterSevenImage from '../assets/chapter-07.webp';
 
 export const chapters = [
   {

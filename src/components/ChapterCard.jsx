@@ -21,6 +21,10 @@ export function ChapterCard({ chapter, onPrevious, onNext, motionState = '', dir
           className="chapter-card__image"
           src={chapter.image}
           alt={chapter.imageAlt}
+          width="1440"
+          height="1440"
+          loading="lazy"
+          decoding="async"
           style={{ objectPosition: chapter.imagePosition ?? 'center' }}
         />
       </div>

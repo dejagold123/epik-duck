@@ -78,10 +78,22 @@ try {
       await menuToggle.click();
       await mobileNav.getByRole('link', { name: 'Vault', exact: true }).click();
       await page.waitForTimeout(100);
+      await page.evaluate(() => document.fonts.ready);
+      await page.waitForFunction(() => {
+        const calculator = document.querySelector('.vault-calculator');
+        const buttons = [...document.querySelectorAll('.vault-calculator__tabs button')];
+        const rows = new Set(buttons.map((button) => button.offsetTop));
+        return getComputedStyle(calculator).opacity === '1' && buttons.length === 5 && rows.size === 1;
+      }, undefined, { timeout: 5000 });
+      const vaultVisibility = await page.locator('.vault-calculator').evaluate((element) => ({
+        opacity: getComputedStyle(element).opacity,
+        detailsOpacity: getComputedStyle(document.querySelector('.vault-panel__details')).opacity,
+      }));
+      assert(vaultVisibility.opacity === '1' && vaultVisibility.detailsOpacity === '1', `${viewport.name}: vault content is still hidden after navigation`);
       const vaultTabs = page.locator('.vault-calculator__tabs button');
-      const tabGeometry = await vaultTabs.evaluateAll((buttons) => buttons.map((button) => button.getBoundingClientRect().toJSON()));
+      const tabGeometry = await vaultTabs.evaluateAll((buttons) => buttons.map((button) => ({ row: button.offsetTop, rect: button.getBoundingClientRect().toJSON() })));
       assert(tabGeometry.length === 5, `${viewport.name}: vault calculator tabs are incomplete`);
-      assert(new Set(tabGeometry.map(({ y }) => Math.round(y))).size === 1, `${viewport.name}: vault calculator tabs wrapped onto multiple rows`);
+      assert(new Set(tabGeometry.map(({ row }) => row)).size === 1, `${viewport.name}: vault calculator tabs wrapped onto multiple rows`);
     } else {
       const desktopNav = page.locator('.header .nav');
       assert(await desktopNav.getByRole('link', { name: 'Home', exact: true }).count() === 1, `${viewport.name}: desktop Home link is missing`);

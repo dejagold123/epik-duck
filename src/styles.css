@@ -1350,6 +1350,17 @@ button { font: inherit; }
     padding-top: 28px;
   }
 
+  /* Subpage navigation should reveal its destination immediately. */
+  main:not([data-mobile-page='home']) .destination-section .motion-item,
+  main:not([data-mobile-page='home']) .destination-section .about-panel__content > *,
+  main:not([data-mobile-page='home']) .destination-section .vault-panel__details,
+  main:not([data-mobile-page='home']) .destination-section .vault-calculator,
+  main:not([data-mobile-page='home']) .destination-section .community-panel__content {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
   main[data-mobile-page='lore'] .chapter-review {
     min-height: calc(100svh - 84px);
     padding-top: 56px;

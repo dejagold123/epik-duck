@@ -455,7 +455,8 @@ button { font: inherit; }
 }
 .destination-section__right-column {
   display: grid;
-  grid-template-rows: minmax(0, 2fr) minmax(0, .9fr);
+  grid-template-rows: auto auto;
+  align-content: start;
   gap: clamp(1.5rem, 2.5vw, 2.75rem);
   min-width: 0;
 }
@@ -970,8 +971,7 @@ button { font: inherit; }
   .about-panel__contract a { font-size: 11px; }
 
   .vault-panel__details {
-    height: 100%;
-    align-content: space-between;
+    align-content: start;
     gap: 18px;
     padding-right: 32px;
   }
@@ -987,7 +987,8 @@ button { font: inherit; }
   }
   .destination-panel--vault { min-height: 454px; }
   .destination-section__right-column {
-    grid-template-rows: 454px 155px;
+    grid-template-rows: auto auto;
+    align-content: start;
     height: auto;
   }
   .destination-panel--about { height: auto; }

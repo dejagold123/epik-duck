@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 
 export const EPIK_MINT = '3BgwJ8b7b9hHX4sgfZ2KJhv9496CoVfsMK2YePevsBRw';
 export const SOL_MINT = 'So11111111111111111111111111111111111111112';
-const PRICE_URL = `https://api.jup.ag/price/v3?ids=${EPIK_MINT},${SOL_MINT}`;
+// Same-origin proxy (see /api/price.js) — calling api.jup.ag directly from
+// the browser hits Jupiter's CORS restrictions on unauthenticated requests.
+const PRICE_URL = '/api/price';
 export const REFRESH_INTERVAL = 60_000;
 export const REQUEST_TIMEOUT = 8_000;
 const RETRY_DELAY = 5_000;
